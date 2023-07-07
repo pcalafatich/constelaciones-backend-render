@@ -26,19 +26,23 @@ const app = express();
 //  });
 
 
-var dominiosHabilitados = ['https://claudiapedrosa.com', 'http://claudiapedrosa.com', 'http://localhost:3000'];
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
+// var dominiosHabilitados = ['https://claudiapedrosa.com', 'http://claudiapedrosa.com', 'http://localhost:3000'];
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin) return callback(null, true);
  
-    if (dominiosHabilitados.indexOf(origin) === -1) {
-      var msg = `Este sitio ${origin} no tiene permisos de acceso. Solo los dominios especificados tiene permiso para acceder.`;
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
-}));
+//     if (dominiosHabilitados.indexOf(origin) === -1) {
+//       var msg = `Este sitio ${origin} no tiene permisos de acceso. Solo los dominios especificados tiene permiso para acceder.`;
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   }
+// }));
 
+app.use(cors({
+  origin: 'https://claudiapedrosa.com',
+  optionsSuccessStatus: 200
+}));
 
 
 const server = require('http').createServer(app);
