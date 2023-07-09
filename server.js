@@ -40,7 +40,7 @@ const app = express();
 // }));
 
 app.use(cors({
-  origin: 'https://claudiapedrosa.com',
+  origin: ['https://claudiapedrosa.com', 'http://localhost:3000'],
   optionsSuccessStatus: 200
 }));
 
@@ -154,7 +154,8 @@ app.post('/api/signup', async (req, res) => {
     const hashedPassword = await hashPassword(
       req.body.password
     );
-
+    console.log(firstName);
+    console.log(lastName);
     const userData = {
       email: email.toLowerCase(),
       firstName,
@@ -162,7 +163,7 @@ app.post('/api/signup', async (req, res) => {
       password: hashedPassword,
       role: 'user'
     };
-
+    console.log(userData);
     const existingEmail = await User.findOne({
       email: userData.email
     }).lean();
@@ -277,12 +278,8 @@ app.patch('/api/user-role', async (req, res) => {
   }
 });
 
-// app.get(
-//   '/api/inventory',
-//   requireAuth,
-//   requireAdmin,
-//   async (req, res) => {
-//     try {
+// app.get('/api/inventory',requireAuth,requireAdmin,async (req, res) => {
+//  try {
 //       const user = req.user.sub;
 //       const inventoryItems = await InventoryItem.find({
 //         user
@@ -409,6 +406,7 @@ async function connect() {
       useUnifiedTopology: true,
       useFindAndModify: false
     });
+    console.log('Conectado exitosamente a la base de datos');
   } catch (err) {
     console.log('Mongoose error', err);
   }
